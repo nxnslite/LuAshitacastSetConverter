@@ -35,7 +35,7 @@ function Convert-XmlToLua {
         $entries += "    ['$setName'] = {"
         Write-Host "Importing set: $setName"  # Debug output
         foreach ($child in $set.ChildNodes) {
-            if ($child.Name -ne 'baseset') {
+            if ($child.Name -ne 'baseset' -and $child.NodeType -eq [System.Xml.XmlNodeType]::Element) {
                 $itemName = $child.Name.Substring(0,1).ToUpper() + $child.Name.Substring(1).ToLower()
                 $itemValue = $child.InnerText -replace "'", "\'"  # Escape single quotes for Lua
                 $entries += "        $itemName = '$itemValue',"
